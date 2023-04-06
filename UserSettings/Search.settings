@@ -7,13 +7,13 @@ onBoardingDoNotAskAgain = true
 showPackageIndexes = false
 showStatusBar = false
 scopes = {
-	"last_search.2138236A" = "sprite"
+	"last_search.2138236A" = "lighting"
 	"OpenInspectorPreview.2138236A" = "0"
-	"currentGroup.2138236A" = "menu"
+	"currentGroup.2138236A" = "asset"
 	"last_search.F8949528" = "lighting"
 	"OpenInspectorPreview.F8949528" = "0"
 	"currentGroup.F8949528" = "all"
-	"last_search.DD5CDD96" = "sprite"
+	"last_search.DD5CDD96" = "lighting"
 	"OpenInspectorPreview.DD5CDD96" = "0"
 	"currentGroup.DD5CDD96" = "scene"
 }
