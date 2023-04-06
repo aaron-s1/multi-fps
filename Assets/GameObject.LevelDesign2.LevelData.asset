@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 670ad16e6abf4aa4b9b9c6bb5ea81170, type: 3}
+  m_Name: GameObject.LevelDesign2.LevelData
+  m_EditorClassIdentifier: 
+  levelData:
+    prefabGUID: 435cd27df5e657c4d96fe40a00217d3a
+    mainSet: {fileID: 11400000, guid: 5c68f49ae842d3c44841737380909fb8, type: 2}
+    objectsSet: {fileID: 11400000, guid: 338340c5f485df24cb45c8831b969b62, type: 2}
+    optionsSettings:
+      moveSnap: 1
+      rotationSnap: 22.5
+      wallsManipulatorsHeight: 1
+      hoverResponsiveHandles: 1
+    visibilitySettings:
+      movement: 1
+      rotation: 1
+      walls: 1
+      wallsMovement: 1
+      wallsRotation: 1
+      wings: 1
+      wingsGrowth: 1
+      wingsLines: 1
+      objects: 1
+      floors: 1
+      hidden: 0
+    wallsData: []
+    simpleObjectsData: []
+    floorsData:
+    - simpleObjectData:
+        fileID: 9132536892047881715
+      prefabGUID: c5a6408687f4a6642b89fd6ea8b7b302
+      size: 2
+      tilesFileIDsWidth: 1
+      startingRow: 0
+      startingCol: 0
+      tilesFileIDs: 325ab670f9105626
+    - simpleObjectData:
+        fileID: 8343051268161477795
+      prefabGUID: 4cf599942c7e83e4bbc35b67a488e70a
+      size: 2
+      tilesFileIDsWidth: 1
+      startingRow: 0
+      startingCol: 0
+      tilesFileIDs: aa7bb3424d22bd46
+    - simpleObjectData:
+        fileID: 40361587525198224
+      prefabGUID: c5a6408687f4a6642b89fd6ea8b7b302
+      size: 2
+      tilesFileIDsWidth: 1
+      startingRow: 2
+      startingCol: 0
+      tilesFileIDs: e71e5eb8deb42626988ce1641e08ee46f93df18b297b4b34

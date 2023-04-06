@@ -23,7 +23,7 @@ public class FirstPersonMovement : MonoBehaviour
     [SerializeField] float dashSpeed = 2f;
     [SerializeField] float dashDuration = 2f;
     bool isDashing;
-    bool acceptingMovementInput;
+    bool acceptingMovementInput = true;
     #endregion
 
     FirstPersonLook firstPersonLookCamera;
@@ -46,7 +46,7 @@ public class FirstPersonMovement : MonoBehaviour
 
     void Update()
     {
-        acceptingMovementInput = !isDashing;
+        // acceptingMovementInput = !isDashing;
 
         if (Input.GetKeyDown(dashKey) & !isDashing)
             StartCoroutine(Dash());
@@ -88,9 +88,9 @@ public class FirstPersonMovement : MonoBehaviour
         originalLookSensitivity = firstPersonLookCamera.sensitivity;
         firstPersonLookCamera.sensitivity = 0;
 
+        acceptingMovementInput = canRun = false;
         isDashing = true;
-        // look at + latch onto enemy
-        // tilt camera
+        // look at + latch onto enemy.
 
         float dashTimer = 0f;
         while (dashTimer < dashDuration)
@@ -101,6 +101,8 @@ public class FirstPersonMovement : MonoBehaviour
         }
         
         isDashing = false;
+        acceptingMovementInput = true;
+
         firstPersonLookCamera.sensitivity = originalLookSensitivity;
         transform.rotation = Quaternion.identity;
 
@@ -110,11 +112,11 @@ public class FirstPersonMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (isDashing)
-        {
-            acceptingMovementInput = IsRunning = !isDashing;
-            return;
-        }
+        // if (isDashing)
+        // {
+        //     acceptingMovementInput = IsRunning = !isDashing;
+        //     return;
+        // }
 
         IsRunning = canRun && Input.GetKey(runningKey);
 

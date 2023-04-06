@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 670ad16e6abf4aa4b9b9c6bb5ea81170, type: 3}
+  m_Name: GameObject.LevelDesign.LevelData
+  m_EditorClassIdentifier: 
+  levelData:
+    prefabGUID: 6be3cf06ba5d82e44960e45182d14112
+    mainSet: {fileID: 11400000, guid: 5c68f49ae842d3c44841737380909fb8, type: 2}
+    objectsSet: {fileID: 11400000, guid: 338340c5f485df24cb45c8831b969b62, type: 2}
+    optionsSettings:
+      moveSnap: 1
+      rotationSnap: 22.5
+      wallsManipulatorsHeight: 1
+      hoverResponsiveHandles: 1
+    visibilitySettings:
+      movement: 1
+      rotation: 1
+      walls: 1
+      wallsMovement: 1
+      wallsRotation: 1
+      wings: 1
+      wingsGrowth: 1
+      wingsLines: 1
+      objects: 1
+      floors: 1
+      hidden: 0
+    wallsData:
+    - simpleObjectData:
+        fileID: 8543418622285903348
+      type: 0
+      wingsData:
+      - growDirection: {x: 0, y: 0, z: 1}
+        chainFileIDs: 
+        capFileID: 967141716652359044
+      - growDirection: {x: 0, y: 0, z: -1}
+        chainFileIDs: 
+        capFileID: 664597850861873601
+    simpleObjectsData: []
+    floorsData:
+    - simpleObjectData:
+        fileID: 7393196128657542107
+      prefabGUID: c5a6408687f4a6642b89fd6ea8b7b302
+      size: 2
+      tilesFileIDsWidth: 6
+      startingRow: 7
+      startingCol: 5
+      tilesFileIDs: 4540daca4ee686641c5bddef63e08353a4e65703ed2fc03b8ef06be4aee96837807e6ed36981d4733566b1291a4d810e79b828491dd1b2457ba4cc78a0a78a46175f2b006389cb23e7d39b29847884478c2cb3bde6525e7b4e023a9f26b6ad7476e5d1334406753748be5e8039463a1985369ad566d57e4642ff4cd34b43a733c03c5dd66840134e9d17b5da9b15d372b0b2815de875024dbafad6bf842b403ede1cee81bb61ef4bc0ad71590285023c6cd184a92c681944101c93640bee3c2c9cba41cfa24d636f45f1113037fdac59e41c7dab75b8a801455a4cc2e125416ceb5ae474a9ac592b373c0f807b82553c8bdaa87069ae883c380de736087588229c4dd98b4b65560ffa6598edd0e2a64ca3ee7221fface27cb1e47ec5ffad83778b9dda76a112e9288f9de606569ea625545cb9c340d5aa0102ba123f9544cc315307c950b5fdff4573a4c498f39cc82eaba44c881f1b6222f91279d8ae1d9d4acac506a4739d7b03354d405c45a7242d88efde4cb325de036257565fce28ca1d

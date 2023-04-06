@@ -1,1 +1,0 @@
-Please read the PDF - Maze_Generator_Guide for full instructions.
