@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5463554655594319571}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tile Floor (9x9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

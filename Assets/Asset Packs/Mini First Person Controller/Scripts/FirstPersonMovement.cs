@@ -29,7 +29,7 @@ public class FirstPersonMovement : MonoBehaviour
     FirstPersonLook firstPersonLookCamera;
     float originalLookSensitivity;
 
-
+    
     [Space(10)]
     public float tiltCameraFrequency = 0.5f; 
     public float tiltCameraDuration = 5f;
@@ -46,8 +46,6 @@ public class FirstPersonMovement : MonoBehaviour
 
     void Update()
     {
-        // acceptingMovementInput = !isDashing;
-
         if (Input.GetKeyDown(dashKey) & !isDashing)
             StartCoroutine(Dash());
 
@@ -90,14 +88,13 @@ public class FirstPersonMovement : MonoBehaviour
 
         acceptingMovementInput = canRun = false;
         isDashing = true;
-        // look at + latch onto enemy.
+        // add look at + latch onto enemy.
 
-        float dashTimer = 0f;
-        while (dashTimer < dashDuration)
+        while (isDashing)
         {
-            dashTimer += Time.deltaTime;
-            transform.position += transform.forward * dashSpeed * Time.deltaTime;
-            yield return null;
+            rigidbody.velocity = transform.forward * dashSpeed;
+            yield return new WaitForSeconds(dashDuration);
+            isDashing = false;
         }
         
         isDashing = false;
@@ -110,14 +107,36 @@ public class FirstPersonMovement : MonoBehaviour
     }
 
 
+    // IEnumerator DashOld()
+    // {
+    //     print("dashing");
+    //     originalLookSensitivity = firstPersonLookCamera.sensitivity;
+    //     firstPersonLookCamera.sensitivity = 0;
+
+    //     acceptingMovementInput = canRun = false;
+    //     isDashing = true;
+    //     // look at + latch onto enemy.
+
+    //     float dashTimer = 0f;
+    //     while (dashTimer < dashDuration)
+    //     {
+    //         dashTimer += Time.deltaTime;
+    //         transform.position += transform.forward * dashSpeed * Time.deltaTime;
+    //         yield return null;
+    //     }
+        
+    //     isDashing = false;
+    //     acceptingMovementInput = true;
+
+    //     firstPersonLookCamera.sensitivity = originalLookSensitivity;
+    //     transform.rotation = Quaternion.identity;
+
+    //     print("dash ended");
+    // }
+
+
     void FixedUpdate()
     {
-        // if (isDashing)
-        // {
-        //     acceptingMovementInput = IsRunning = !isDashing;
-        //     return;
-        // }
-
         IsRunning = canRun && Input.GetKey(runningKey);
 
         // Get targetMovingSpeed.
@@ -125,13 +144,24 @@ public class FirstPersonMovement : MonoBehaviour
         if (speedOverrides.Count > 0)
             targetMovingSpeed = speedOverrides[speedOverrides.Count - 1]();
 
-        // Get targetVelocity from input.
         if (!acceptingMovementInput)
             return;
 
         Vector2 targetVelocity = new Vector2( Input.GetAxis("Horizontal") * targetMovingSpeed, Input.GetAxis("Vertical") * targetMovingSpeed);
 
-        // Apply movement.
         rigidbody.velocity = transform.rotation * new Vector3(targetVelocity.x, rigidbody.velocity.y, targetVelocity.y);
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Wall")
+        {
+            if (isDashing)
+            {
+                isDashing = false;
+                StopCoroutine(Dash());
+                Debug.Log("hit wall");
+            }
+        }
     }
 }
