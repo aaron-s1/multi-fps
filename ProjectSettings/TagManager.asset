@@ -7,6 +7,8 @@ TagManager:
   - Tile
   - Wall
   - NumberMissile
+  - TheMorb
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -16,7 +18,7 @@ TagManager:
   - UI
   - floor
   - number missile
-  - 
+  - the morb
   - 
   - 
   - 

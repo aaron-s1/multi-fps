@@ -22,7 +22,9 @@ public class FirstPersonMovement : MonoBehaviour
     [Space(10)]
     [SerializeField] float dashSpeed = 2f;
     [SerializeField] float dashDuration = 2f;
-    bool isDashing;
+    public bool isDashing;
+    public bool dashIsActiveWeapon = true;
+    public bool canSwapWeapons = true;
     bool acceptingMovementInput = true;
     #endregion
 
@@ -46,7 +48,7 @@ public class FirstPersonMovement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(dashKey) & !isDashing)
+        if (Input.GetKeyDown(dashKey) & !isDashing & dashIsActiveWeapon)
             StartCoroutine(Dash());
 
         TiltCameraIfDashing();
@@ -92,6 +94,7 @@ public class FirstPersonMovement : MonoBehaviour
 
         while (isDashing)
         {
+            canSwapWeapons = false;
             rigidbody.velocity = transform.forward * dashSpeed;
             yield return new WaitForSeconds(dashDuration);
             isDashing = false;
@@ -99,6 +102,7 @@ public class FirstPersonMovement : MonoBehaviour
         
         isDashing = false;
         acceptingMovementInput = true;
+        canSwapWeapons = true;
 
         firstPersonLookCamera.sensitivity = originalLookSensitivity;
         transform.rotation = Quaternion.identity;
