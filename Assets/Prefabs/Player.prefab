@@ -135,68 +135,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &270777818508006741
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 270777818508006738}
-  m_Layer: 5
-  m_Name: blank weapon
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &270777818508006738
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 270777818508006741}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5437526573335913426}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &270777818906703389
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 270777818906703386}
-  m_Layer: 5
-  m_Name: Dash (weapon)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &270777818906703386
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 270777818906703389}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5437526573335913426}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &270777819103404461
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,7 +354,7 @@ PrefabInstance:
     - target: {fileID: 1656726436, guid: f2e0b7ae4dae8cf44955bccd3512b213, type: 3}
       propertyPath: weapon1
       value: 
-      objectReference: {fileID: 270777818906703389}
+      objectReference: {fileID: 0}
     - target: {fileID: 1656726436, guid: f2e0b7ae4dae8cf44955bccd3512b213, type: 3}
       propertyPath: weapon2
       value: 
@@ -424,7 +362,7 @@ PrefabInstance:
     - target: {fileID: 1656726436, guid: f2e0b7ae4dae8cf44955bccd3512b213, type: 3}
       propertyPath: weapon3
       value: 
-      objectReference: {fileID: 270777818508006741}
+      objectReference: {fileID: 0}
     - target: {fileID: 1656726436, guid: f2e0b7ae4dae8cf44955bccd3512b213, type: 3}
       propertyPath: handsAnimator
       value: 
@@ -853,17 +791,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &270777819278459599 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 679014427, guid: f2e0b7ae4dae8cf44955bccd3512b213, type: 3}
-  m_PrefabInstance: {fileID: 270777818879439572}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5396268502554614246 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5269945355364510514, guid: f2e0b7ae4dae8cf44955bccd3512b213, type: 3}
@@ -897,17 +824,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bdcd45217a5fec47ac85584be0fd158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FPS_Controller: {fileID: 5396268502554614246}
   currentWeapon: {fileID: 0}
+  ammoLevel: {fileID: 0}
   weaponList: {fileID: 11400000, guid: b6e70184a01fa8c44abb984c80f48480, type: 2}
   armsWeaponNumber: {fileID: 270777818804104841}
-  weaponDescription: {fileID: 270777819278459599}
   weaponSwapCooldown: 0.5
   timeBetweenAttacks: 1
-  handsAnimator: {fileID: 7222914483618734636}
-  testNewTravelOrb: {fileID: 0}
-  FPS_Controller: {fileID: 5396268502554614246}
-  mORBTravelSpeed: 10
-  onCooldown: 0
 --- !u!95 &7222914483618734636 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 7493159140186083576, guid: f2e0b7ae4dae8cf44955bccd3512b213, type: 3}

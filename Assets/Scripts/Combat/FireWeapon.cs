@@ -11,6 +11,10 @@ public class FireWeapon : MonoBehaviour
     [SerializeField] public Weapon currentWeapon;
     GameObject currentWeaponInstance;
 
+    bool canFire;
+
+    public TextMeshProUGUI ammoLevel;
+
     // This gets filled in with WeaponList (scriptable object).
     [SerializeField] public WeaponList weaponList;
 
@@ -34,51 +38,58 @@ public class FireWeapon : MonoBehaviour
     void Awake()
     {
         FPS_Controller = GetComponent<FirstPersonMovement>();        
-        StartCoroutine(CreateWeapon(1));
+        StartCoroutine(SwapToWeapon(1));
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
-            StartCoroutine(CreateWeapon(1));
+            StartCoroutine(SwapToWeapon(1));
         if (Input.GetKeyDown(KeyCode.Alpha2))
-            StartCoroutine(CreateWeapon(2));
+            StartCoroutine(SwapToWeapon(2));
         if (Input.GetKeyDown(KeyCode.Alpha3))
-            StartCoroutine(CreateWeapon(3));
+            StartCoroutine(SwapToWeapon(3));
 
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && canFire)
             Fire();
     }
 
 
     // Keep 0 (first array) empty.
-    IEnumerator CreateWeapon(int weaponSlot)
+    IEnumerator SwapToWeapon(int weaponSlot)
     {
-        if (currentWeaponInstance == null)
+        if (currentWeapon == weaponList.weapons[weaponSlot])
             yield break;
+
+        canFire = false;
         
-        // add later: if on cooldown, yield break.
+        // add later: if current weapon is on cooldown, yield break.
         
-        if (currentWeapon != weaponList.weapons[weaponSlot])
-        {
-            currentWeapon = null;            
+        // if (currentWeapon != weaponList.weapons[weaponSlot])
+        // {
+        
+        currentWeapon = null;
+
+        if (currentWeaponInstance != null)
             Destroy(currentWeaponInstance);
 
-            yield return new WaitForSeconds(weaponSwapCooldown);
+        yield return new WaitForSeconds(weaponSwapCooldown);
 
-            currentWeapon = weaponList.weapons[weaponSlot];
-            currentWeaponInstance = Instantiate(currentWeapon.equippedPrefab, transform.position, transform.rotation);
-            weaponsFiringScript = FindFiringScriptOfNewWeapon(currentWeaponInstance);
+        currentWeapon = weaponList.weapons[weaponSlot];
+        currentWeaponInstance = Instantiate(currentWeapon.equippedPrefab, transform.position, transform.rotation);
+        weaponsFiringScript = FindFiringScriptOfNewWeapon(currentWeaponInstance);
 
-            currentWeaponInstance.SetActive(true);
+        currentWeaponInstance.SetActive(true);  // just in case
             // Debug.Log("weaponsFiringScript after Creating Weapon = " + weaponsFiringScript);
-        }
-
-        else
-            yield break;
-
+        // }
         armsWeaponNumber.text = weaponSlot.ToString();
+
+        canFire = true;
+
+        // else
+        // yield break;
+
     }
 
 

@@ -9,6 +9,9 @@ x, King of Contrarians
 
 
 General Level Design
+- Doom: indoors, sci-fi
+- Metal Hellsing: outdoors, Mars-like
+- Dusk: indoors, cave-like 
 
 
 
