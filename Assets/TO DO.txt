@@ -1,11 +1,12 @@
 Weapons
-- More weapons. Bats? Lifesteal?
-
+- Dash. Give lifesteal?
+- The mORB. Projectile. Add bouncing between targets later?
+- Bats?
 
 
 Enemies
-- More enemy variety
-x, King of Contrarians
+- More humanoid enemy variety
+- Boss: x, King of Contrarians
 
 
 General Level Design
@@ -14,13 +15,15 @@ General Level Design
 - Dusk: indoors, cave-like 
 
 
+Doom Map Ideas
+- Look/feel matches Doom (1993) for normal levels, swaps to a more intense Doom (2016) for boss fights
 
 
 
+General Song Reference Ideas
+- The Only Thing They Fear is Morb
 
 
 
 General Ideas: 
 mobius strip -> morbius strip
-
-
