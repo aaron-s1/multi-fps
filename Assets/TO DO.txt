@@ -1,7 +1,17 @@
+Overall Design
+- 2D or 3D?
+    ~ (Soul Sphere (the mORB) 3D asset is not available)
+
+
+
+
+
 Weapons
 - Dash. Give lifesteal?
-- The mORB. Projectile. Add bouncing between targets later?
+- The mORB. Projectile.
+    ~ Add talents later? Bouncing between targets?
 - Bats?
+
 
 
 Enemies
@@ -24,6 +34,9 @@ General Song Reference Ideas
 - The Only Thing They Fear is Morb
 
 
+Misc.
+- Dying
+- Respawning, respawn points
 
 General Ideas: 
 mobius strip -> morbius strip

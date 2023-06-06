@@ -5,23 +5,20 @@ public class mORB_Weapon : MonoBehaviour, IFireable
 {
     [SerializeField] Transform player;
 
-    // [SerializeField] Vector3 spawnLocation;
-
     [SerializeField] float moveDistance = 12f;
-    [SerializeField] float throwSpeed = 0.01f;
-    [SerializeField] float returnSpeed = 0.01f;
 
-    Quaternion startRotation;
-    // public Transform playerPosition;
-    
-    // Rename later? Populate this to make sure [m]Orb displays alongside UI. 
+    [Tooltip("Lowering value increases speed.")]
+    [SerializeField] float throwSpeed = 0.1f;
+    [Tooltip("Lowering value increases speed.")]
+    [SerializeField] float returnSpeed = 0.1f;
+
+    // Populate this to make sure [m]Orb displays at intended UI position.
     [SerializeField] Vector3 UI_offsetPosition;
 
-    // Transform player;
-    // Vector3 startPos;
-    // Vector3 endPos;
+    Vector3 startPositionLocal;
+    Quaternion startRotationLocal;
 
-    public bool isMoving;
+    bool isMoving;
     bool onCooldown;
     bool canKillEnemy;
 
@@ -29,55 +26,23 @@ public class mORB_Weapon : MonoBehaviour, IFireable
 
     void Awake()
     {
-        // prefabInstance = this.gameObject;        
-        // testing spawn/start location
-        // startPosition = new Vector3 (-1.35f, 1.1f, 2.25f);
-        // startPos = transform.position;
-
-        // playerPos = GetComponentInParent<Transform>().position;
-        // playerPos = GameObject.FindGameObjectWithTag("Player");
-        
         player = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0);
 
         transform.parent = player;
 
-        transform.localPosition = UI_offsetPosition;                
-        startRotation = transform.localRotation;
-        // originalPosition = 
-        // Debug.Log(player);
-        // Invoke("FindPlayer", 3f);
-        // Invoke("FindPlayer2", 3f);
-        // player = GetComponentInParent<FirstPersonMovement>().transform;
-        
-        // startPosition = GameObject.FindGameObjectWithTag("TheMorb").transform.position;
-        // endPos = startPos + new Vector3(0, 0, moveDistance);
+        transform.localPosition = startPositionLocal = UI_offsetPosition;
+
+        startRotationLocal = transform.localRotation;
     }
 
-    // void FindPlayer()
-    // {
-    //     player = GameObject.FindGameObjectWithTag("Player").transform;
-    //     Debug.Log(player);
-    // }
-
-    // void FindPlayer2()
-    // {
-    //     player = GetComponentInParent<FirstPersonMovement>().gameObject.transform;
-    //     Debug.Log(player);
-    // }
 
     public void Fire(GameObject weapon) {
-        // if (prefabInstance == null)
-            // Instantiate(weapon.equippedPrefab, startPosition, player.transform.rotation);
-        
         if (onCooldown || isMoving)
             return;
 
         onCooldown = true;
         
-        // prefabInstance.SetActive(true);
         transform.parent = player;
-        UI_offsetPosition = transform.localPosition;
-        startRotation = transform.localRotation;
 
         StartCoroutine(FireTheMORB());
     }
@@ -86,36 +51,37 @@ public class mORB_Weapon : MonoBehaviour, IFireable
 
     IEnumerator FireTheMORB() {
         onCooldown = isMoving = canKillEnemy = true;
-
-        transform.parent = null;
-
-        Vector3 startPosition = transform.localPosition;
+        
         Vector3 forwardDirection = player.forward;
+        Vector3 startPosition = transform.position;
         Vector3 endPosition = startPosition + forwardDirection * moveDistance;
 
-
+        transform.parent = null;
+        
         float t = 0f;
-        while (t < throwSpeed) {
-            Debug.Log("original pos = " + UI_offsetPosition);
+        while (t < throwSpeed)
+        {
             t += Time.deltaTime;
-            float step = moveDistance / throwSpeed * Time.deltaTime;
 
-            transform.localPosition = Vector3.Lerp(startPosition, endPosition, t / throwSpeed);
+            transform.position = Vector3.Lerp(startPosition, endPosition, t / throwSpeed);
 
             yield return null;
         }
+
 
         t = 0f;
-        while (t < throwSpeed) {
+        while (t < throwSpeed)
+        {
             transform.parent = player;
-                        
             t += Time.deltaTime;
-            float step = moveDistance / throwSpeed * Time.deltaTime;
 
-            transform.localPosition = Vector3.Lerp(endPosition, UI_offsetPosition, t / throwSpeed * returnSpeed);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, startPositionLocal, t / returnSpeed);
+            transform.localEulerAngles = new Vector3(0,0,0);
 
             yield return null;
         }
+
+        transform.localPosition = startPositionLocal;
 
         onCooldown = isMoving = canKillEnemy = false;
     }

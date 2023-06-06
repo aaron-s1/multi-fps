@@ -800,7 +800,12 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    Standalone: JUPITER
+    Android: PROBUILDER_EXPERIMENTAL_FEATURES
+    Server: PROBUILDER_EXPERIMENTAL_FEATURES
+    Standalone: JUPITER;PROBUILDER_EXPERIMENTAL_FEATURES
+    WebGL: PROBUILDER_EXPERIMENTAL_FEATURES
+    Windows Store Apps: PROBUILDER_EXPERIMENTAL_FEATURES
+    iPhone: PROBUILDER_EXPERIMENTAL_FEATURES
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
