@@ -3,15 +3,29 @@ Overall Design
     ~ (Soul Sphere (the mORB) 3D asset is not available)
 
 
+General Ideas: 
+- mobius strip -> morbius strip
+
+
+Player Design
+- Tighten up controller
 
 
 
 Weapons
 - Dash. Give lifesteal?
+    ~ Let Dash be a default ability? (not a weapon)
+    ~ Tighten up movement
 - The mORB. Projectile.
     ~ Add talents later? Bouncing between targets?
 - Bats?
+- More weapons.
 
+
+General Level Design
+- Doom: indoors, sci-fi
+- Metal Hellsing: outdoors, Mars-like
+- Dusk: outdoors (to promote speed jumping), low polygon 
 
 
 Enemies
@@ -19,24 +33,35 @@ Enemies
 - Boss: x, King of Contrarians
 
 
-General Level Design
-- Doom: indoors, sci-fi
-- Metal Hellsing: outdoors, Mars-like
-- Dusk: indoors, cave-like 
+Props / Lighting
+- Moody lighting
+- Props to limit pathing
 
 
 Doom Map Ideas
 - Look/feel matches Doom (1993) for normal levels, swaps to a more intense Doom (2016) for boss fights
 
 
-
 General Song Reference Ideas
 - The Only Thing They Fear is Morb
+- Of All the Lives We've Morbed (No Tomorrow - Serj Tankian)
+
+
+UI
+- Retractable UI?
+
+
+Camera
+- Cutscene for boss(es).
 
 
 Misc.
 - Dying
 - Respawning, respawn points
 
-General Ideas: 
-mobius strip -> morbius strip
+
+Bugs
+- 
+
+
+

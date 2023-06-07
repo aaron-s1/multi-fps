@@ -66,9 +66,6 @@ public class FireWeapon : MonoBehaviour
         
         // add later: if current weapon is on cooldown, yield break.
         
-        // if (currentWeapon != weaponList.weapons[weaponSlot])
-        // {
-        
         currentWeapon = null;
 
         if (currentWeaponInstance != null)
@@ -81,15 +78,9 @@ public class FireWeapon : MonoBehaviour
         weaponsFiringScript = FindFiringScriptOfNewWeapon(currentWeaponInstance);
 
         currentWeaponInstance.SetActive(true);  // just in case
-            // Debug.Log("weaponsFiringScript after Creating Weapon = " + weaponsFiringScript);
-        // }
         armsWeaponNumber.text = weaponSlot.ToString();
 
         canFire = true;
-
-        // else
-        // yield break;
-
     }
 
 

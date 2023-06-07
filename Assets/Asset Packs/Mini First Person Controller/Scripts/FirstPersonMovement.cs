@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class FirstPersonMovement : MonoBehaviour
 {
-    public float speed = 5;
+    [SerializeField] float speed = 5;
+    [SerializeField] float runSpeed = 9;
+    [SerializeField] KeyCode runningKey = KeyCode.I;
+    [SerializeField] KeyCode dashKey = KeyCode.N;
 
     // Not used. Keep run speed at normal speed, running key at where it won't be triggered.
     [Header("Running")]
-    public bool canRun = true;        
+    bool canRun = true;        
     public bool IsRunning { get; private set; }
-    public float runSpeed = 9;
-    public KeyCode runningKey = KeyCode.I;
-    public KeyCode dashKey = KeyCode.N;
 
     Rigidbody rigidbody;
     /// <summary> Functions to override movement speed. Will use the last added override. </summary>
@@ -33,9 +33,9 @@ public class FirstPersonMovement : MonoBehaviour
 
     
     [Space(10)]
-    public float tiltCameraFrequency = 0.5f; 
-    public float tiltCameraDuration = 5f;
-    public float tiltCameraRange = 1f;
+    [SerializeField] float tiltCameraFrequency = 0.5f; 
+    [SerializeField] float tiltCameraDuration = 5f;
+    [SerializeField] float tiltCameraRange = 1f;
     float tiltTimeElapsed = 0f;
     bool isTiltingForward = true;
 
@@ -84,7 +84,6 @@ public class FirstPersonMovement : MonoBehaviour
 
     IEnumerator Dash()
     {
-        print("dashing");
         originalLookSensitivity = firstPersonLookCamera.sensitivity;
         firstPersonLookCamera.sensitivity = 0;
 
@@ -106,37 +105,7 @@ public class FirstPersonMovement : MonoBehaviour
 
         firstPersonLookCamera.sensitivity = originalLookSensitivity;
         transform.rotation = Quaternion.identity;
-
-        print("dash ended");
     }
-
-
-    // IEnumerator DashOld()
-    // {
-    //     print("dashing");
-    //     originalLookSensitivity = firstPersonLookCamera.sensitivity;
-    //     firstPersonLookCamera.sensitivity = 0;
-
-    //     acceptingMovementInput = canRun = false;
-    //     isDashing = true;
-    //     // look at + latch onto enemy.
-
-    //     float dashTimer = 0f;
-    //     while (dashTimer < dashDuration)
-    //     {
-    //         dashTimer += Time.deltaTime;
-    //         transform.position += transform.forward * dashSpeed * Time.deltaTime;
-    //         yield return null;
-    //     }
-        
-    //     isDashing = false;
-    //     acceptingMovementInput = true;
-
-    //     firstPersonLookCamera.sensitivity = originalLookSensitivity;
-    //     transform.rotation = Quaternion.identity;
-
-    //     print("dash ended");
-    // }
 
 
     void FixedUpdate()
