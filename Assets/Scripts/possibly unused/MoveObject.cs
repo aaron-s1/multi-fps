@@ -1,73 +1,76 @@
-using UnityEngine;
-using System.Collections;
+// using UnityEngine;
+// using System.Collections;
 
-public class MoveObject : MonoBehaviour {
+// public class MoveObject : MonoBehaviour {
 
-    [SerializeField] public float moveDistance = 12f; // The distance to move on the Z axis
-    [SerializeField] public float throwSpeed = 0.01f; // The time it takes to move the object
-    [SerializeField] public float returnSpeed = 0.01f;
+        // "mORB_Weapon.cs" REPLACES THIS.
 
-    private Vector3 startPosition; // The starting position of the object
-    private Vector3 endPosition; // The end position of the object
-    private bool isMoving = false; // Whether the object is currently moving
+        
+//     [SerializeField] public float moveDistance = 12f; // The distance to move on the Z axis
+//     [SerializeField] public float throwSpeed = 0.01f; // The time it takes to move the object
+//     [SerializeField] public float returnSpeed = 0.01f;
 
-    public bool canKillEnemy;
+//     private Vector3 startPosition; // The starting position of the object
+//     private Vector3 endPosition; // The end position of the object
+//     private bool isMoving = false; // Whether the object is currently moving
 
-    [SerializeField] public GameObject player;
+//     public bool canKillEnemy;
 
-    void Start () {
-        startPosition = transform.localPosition; // Record the starting position of the object
-        endPosition = startPosition + new Vector3(0, 0, moveDistance); // Calculate the end position of the object
-    }
+//     [SerializeField] public GameObject player;
 
-    void Update () {
-        if (!isMoving) {
-        }
-    }
+//     void Start () {
+//         startPosition = transform.localPosition; // Record the starting position of the object
+//         endPosition = startPosition + new Vector3(0, 0, moveDistance); // Calculate the end position of the object
+//     }
 
-    IEnumerator MoveObjectCoroutine() {
-        player.GetComponent<FireWeapon>().ammoLevel.text = "0";
-        isMoving = true;
-        canKillEnemy = true;
+//     void Update () {
+//         if (!isMoving) {
+//         }
+//     }
 
-        Vector3 startPosition = transform.localPosition;
-        Vector3 endPosition = startPosition + new Vector3(0, 0, moveDistance);
+//     IEnumerator MoveObjectCoroutine() {
+//         // player.GetComponent<FireWeapon>().ammoLevelText.text = "0";
+//         isMoving = true;
+//         canKillEnemy = true;
 
-        float t = 0f;
-        while (t < throwSpeed) {
-            t += Time.deltaTime;
-            float step = moveDistance / throwSpeed * Time.deltaTime;
-            transform.localPosition = Vector3.Lerp(startPosition, endPosition, t / throwSpeed);
-            yield return null;
-        }
+//         Vector3 startPosition = transform.localPosition;
+//         Vector3 endPosition = startPosition + new Vector3(0, 0, moveDistance);
 
-        t = 0f;
-        while (t < throwSpeed) {
-            t += Time.deltaTime;
-            float step = moveDistance / throwSpeed * Time.deltaTime;
-            transform.localPosition = Vector3.Lerp(endPosition, startPosition, t / throwSpeed * returnSpeed); // use the returnSpeed variable to control the speed of the return movement
-            yield return null;
-        }
+//         float t = 0f;
+//         while (t < throwSpeed) {
+//             t += Time.deltaTime;
+//             float step = moveDistance / throwSpeed * Time.deltaTime;
+//             transform.localPosition = Vector3.Lerp(startPosition, endPosition, t / throwSpeed);
+//             yield return null;
+//         }
 
-        player.GetComponent<FireWeapon>().ammoLevel.text = "1";
+//         t = 0f;
+//         while (t < throwSpeed) {
+//             t += Time.deltaTime;
+//             float step = moveDistance / throwSpeed * Time.deltaTime;
+//             transform.localPosition = Vector3.Lerp(endPosition, startPosition, t / throwSpeed * returnSpeed); // use the returnSpeed variable to control the speed of the return movement
+//             yield return null;
+//         }
 
-        canKillEnemy = false;
+//         // player.GetComponent<FireWeapon>().ammoLevelText.text = "1";
 
-        transform.localPosition = startPosition;
-        isMoving = false;
-    }
+//         canKillEnemy = false;
 
-    public void StartMoving() {
-        if (!isMoving) {
-            StartCoroutine(MoveObjectCoroutine()); // Start the coroutine to move the object
-        }
-    }
+//         transform.localPosition = startPosition;
+//         isMoving = false;
+//     }
 
-    void OnTriggerEnter(Collider other) {
-        if (other.tag == "Enemy")
-        {
-            if (canKillEnemy)
-                other.gameObject.GetComponent<EnemyDies>().Die();
-        }
-    }
-}
+//     public void StartMoving() {
+//         if (!isMoving) {
+//             StartCoroutine(MoveObjectCoroutine()); // Start the coroutine to move the object
+//         }
+//     }
+
+//     void OnTriggerEnter(Collider other) {
+//         if (other.tag == "Enemy")
+//         {
+//             if (canKillEnemy)
+//                 other.gameObject.GetComponent<EnemyDies>().Die();
+//         }
+//     }
+// }

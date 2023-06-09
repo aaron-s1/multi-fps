@@ -10,12 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 859f3649591ddd5418b7cedef3f39e7f, type: 3}
-  m_Name: test weapon 1
+  m_Name: Dash Weapon
   m_EditorClassIdentifier: 
-  equippedPrefab: {fileID: 3228522581821424960, guid: a677845e699beb34592c388219e181d9, type: 3}
+  equippedPrefab: {fileID: 2398073287533149138, guid: b2230dff11837f44083e416559992dd7, type: 3}
   ammoLevel: {fileID: 0}
   weaponDescription: {fileID: 0}
-  fireCooldown: 0
-  cooldown: 1
-  handsAnimator: {fileID: 0}
-  mORBTravelSpeed: 0
+  cooldown: 3
+  ammoCapacity: 5

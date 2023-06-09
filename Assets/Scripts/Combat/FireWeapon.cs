@@ -6,87 +6,121 @@ using UnityEngine;
 
 public class FireWeapon : MonoBehaviour
 {
-    [SerializeField] FirstPersonMovement FPS_Controller;
-
-    [SerializeField] public Weapon currentWeapon;
-    GameObject currentWeaponInstance;
-
-    bool canFire;
-
-    public TextMeshProUGUI ammoLevel;
-
     // This gets filled in with WeaponList (scriptable object).
     [SerializeField] public WeaponList weaponList;
 
-    MonoBehaviour weaponsFiringScript;
-
-    [SerializeField] public TextMeshProUGUI armsWeaponNumber;
-
+    [SerializeField] float weaponSwapCooldown = 0.5f;
+    [Space(5)]
+    [SerializeField] TextMeshProUGUI ammoLevelText;
+    [SerializeField] TextMeshProUGUI armsWeaponNumber;
     // [SerializeField] TextMeshProUGUI weaponDescription;
 
-
-        [SerializeField] float weaponSwapCooldown = 0.5f;
-        [SerializeField] float timeBetweenAttacks = 1f;
-
-        // public Animator handsAnimator;
+    Weapon currentWeapon;    
+    GameObject currentWeaponInstance;
+    MonoBehaviour weaponInstanceFiringScript;
 
     int remainingAmmo;
 
-        // float timeSinceLastAttack = Mathf.Infinity;
+    bool weaponIsCurrentlyFiring;
 
 
-    void Awake()
-    {
-        FPS_Controller = GetComponent<FirstPersonMovement>();        
-        StartCoroutine(SwapToWeapon(1));
-    }
+    void Awake() =>
+        StartCoroutine(SwapWeapons(1));
+
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
-            StartCoroutine(SwapToWeapon(1));
+            StartCoroutine(SwapWeapons(1));
         if (Input.GetKeyDown(KeyCode.Alpha2))
-            StartCoroutine(SwapToWeapon(2));
+            StartCoroutine(SwapWeapons(2));
         if (Input.GetKeyDown(KeyCode.Alpha3))
-            StartCoroutine(SwapToWeapon(3));
+            StartCoroutine(SwapWeapons(3));
 
 
-        if (Input.GetMouseButtonDown(0) && canFire)
+        if (Input.GetMouseButtonDown(0))
             Fire();
     }
 
 
-    // Keep 0 (first array) empty.
-    IEnumerator SwapToWeapon(int weaponSlot)
+    // Keep WeaponList[0] empty.
+    IEnumerator SwapWeapons(int weaponSlot)
     {
         if (currentWeapon == weaponList.weapons[weaponSlot])
             yield break;
-
-        canFire = false;
         
-        // add later: if current weapon is on cooldown, yield break.
-        
-        currentWeapon = null;
-
-        if (currentWeaponInstance != null)
-            Destroy(currentWeaponInstance);
+        if (weaponIsCurrentlyFiring)
+            yield break;
 
         yield return new WaitForSeconds(weaponSwapCooldown);
 
-        currentWeapon = weaponList.weapons[weaponSlot];
+        currentWeapon = null;
+        
+        if (currentWeaponInstance != null)
+            Destroy(currentWeaponInstance);
+
+        currentWeapon = weaponList.weapons[weaponSlot];        
         currentWeaponInstance = Instantiate(currentWeapon.equippedPrefab, transform.position, transform.rotation);
-        weaponsFiringScript = FindFiringScriptOfNewWeapon(currentWeaponInstance);
+        currentWeaponInstance.SetActive(true);
 
-        currentWeaponInstance.SetActive(true);  // just in case
-        armsWeaponNumber.text = weaponSlot.ToString();
+        weaponInstanceFiringScript = FindFiringScriptOfNewWeapon(currentWeaponInstance);
 
-        canFire = true;
+        remainingAmmo = currentWeapon.ammoCapacity;
+        yield return UpdateWeaponsUI(true);
+
+        weaponIsCurrentlyFiring = false;
+    }
+
+    IEnumerator UpdateWeaponsUI(bool weaponWasSwapped = false)
+    {        
+        ammoLevelText.text = remainingAmmo.ToString();
+
+        if (weaponWasSwapped)
+            armsWeaponNumber.text = System.Array.IndexOf(weaponList.weapons, currentWeapon).ToString();
+
+        yield return null;
     }
 
 
+    // The created Game Object instance of a Weapon sets its own conditions on if it actually fires.
+    public void Fire()
+    {        
+        if (weaponIsCurrentlyFiring)
+            return;
 
-    public void Fire() =>
-        ((IFireable)weaponsFiringScript).Fire(currentWeaponInstance);
+        if (remainingAmmo <= 0)
+            return;
+        
+        remainingAmmo--;        
+
+        StartCoroutine(StartFireCooldown());
+        
+        ammoLevelText.text = remainingAmmo.ToString();
+
+        Debug.Log("fired");
+        ((IFireable)weaponInstanceFiringScript).Fire(currentWeaponInstance);
+    }
+
+    IEnumerator StartFireCooldown()
+    {
+        yield return UpdateWeaponsUI();
+
+        float t = 0f;
+        while (t < currentWeapon.cooldown)
+        {
+            Debug.Log("current weapon on cooldown");
+            t += Time.deltaTime;
+            weaponIsCurrentlyFiring = true;
+            yield return null;
+        }
+
+        remainingAmmo++;
+        yield return UpdateWeaponsUI();
+
+        weaponIsCurrentlyFiring = false;
+
+        yield break;
+    }
 
 
 
@@ -98,10 +132,7 @@ public class FireWeapon : MonoBehaviour
         foreach (MonoBehaviour script in scripts)
         {
             if (script is IFireable)
-            {
-                // weaponsFiringScript = script;
                 return script;
-            }
         }
 
         return null;

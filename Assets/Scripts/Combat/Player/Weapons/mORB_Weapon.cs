@@ -18,8 +18,8 @@ public class mORB_Weapon : MonoBehaviour, IFireable
     Vector3 startPositionLocal;
     Quaternion startRotationLocal;
 
-    bool isMoving;
-    bool onCooldown;
+    // bool canFire;
+    bool orbIsAlreadyFiring;
     bool canKillEnemy;
 
     static GameObject prefabInstance;
@@ -27,7 +27,6 @@ public class mORB_Weapon : MonoBehaviour, IFireable
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0);
-
         transform.parent = player;
 
         transform.localPosition = startPositionLocal = UI_offsetPosition;
@@ -36,11 +35,11 @@ public class mORB_Weapon : MonoBehaviour, IFireable
     }
 
 
-    public void Fire(GameObject weapon) {
-        if (onCooldown || isMoving)
-            return;
+    public void Fire(GameObject weapon)
+    {        
+        // if (orbIsAlreadyFiring)
+            // return;
 
-        onCooldown = true;
         
         transform.parent = player;
 
@@ -49,8 +48,10 @@ public class mORB_Weapon : MonoBehaviour, IFireable
 
 
 
-    IEnumerator FireTheMORB() {
-        onCooldown = isMoving = canKillEnemy = true;
+    IEnumerator FireTheMORB()
+    {
+        Debug.Log("morb began firing");
+        canKillEnemy = true;
         
         Vector3 forwardDirection = player.forward;
         Vector3 startPosition = transform.position;
@@ -83,7 +84,7 @@ public class mORB_Weapon : MonoBehaviour, IFireable
 
         transform.localPosition = startPositionLocal;
 
-        onCooldown = isMoving = canKillEnemy = false;
+        canKillEnemy = false;
     }
 
 
@@ -94,7 +95,4 @@ public class mORB_Weapon : MonoBehaviour, IFireable
                 other.gameObject.GetComponent<EnemyDies>().Die();
         }
     }
-
-
-    public bool OnCooldown() => onCooldown;
 }
