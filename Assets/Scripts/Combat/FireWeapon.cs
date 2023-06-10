@@ -25,7 +25,7 @@ public class FireWeapon : MonoBehaviour
 
 
     void Awake() =>
-        StartCoroutine(SwapWeapons(1));
+        StartCoroutine(SwapWeapons(2));
 
 
     void Update()
@@ -115,7 +115,7 @@ public class FireWeapon : MonoBehaviour
         }
 
         remainingAmmo++;
-        
+
         yield return UpdateWeaponsUI();
 
         weaponIsCurrentlyFiring = false;

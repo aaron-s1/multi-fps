@@ -51,3 +51,4 @@ MonoBehaviour:
   tiltCameraFrequency: 0.5
   tiltCameraDuration: 5
   tiltCameraRange: 1
+  levitationTime: 1

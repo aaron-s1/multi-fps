@@ -31,6 +31,8 @@ General Level Design
 Enemies
 - More humanoid enemy variety
 - Boss: x, King of Contrarians
+    ~ Ability: Fast-moving number traps on ground that travel towards play and must be dodged.
+    
 
 
 Props / Lighting

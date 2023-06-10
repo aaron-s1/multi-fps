@@ -37,8 +37,45 @@ public class Dash_Weapon : MonoBehaviour, IFireable
     }
 
 
-    public void Fire(GameObject instance) =>
-        StartCoroutine(StartDash(player.transform));          
+    public void Fire(GameObject instance)
+    {
+        StartCoroutine(StartLevitation(player.transform));
+        // StartCoroutine(StartDash(player.transform));
+    }
+
+
+    IEnumerator StartLevitation(Transform playerTransform)
+    {
+        acceptPlayerInputs = player.GetComponent<FirstPersonMovement>().acceptingMovementInput = false;
+        Invoke("EndLevitation", levitationTime);
+        isLevitating = true;
+        // playerRigid.useGravity = false;
+
+        // This makes the  while loop not work.
+        // playerRigid.isKinematic = true;
+
+        while (isLevitating)
+        {
+            playerRigid.velocity = playerTransform.up * 1f;
+            yield return null;
+        }
+
+        if (!isLevitating & !isDashing)
+            StartCoroutine(StartDash(playerTransform));
+
+        yield return null;
+    }
+
+    void EndLevitation()
+    {
+        playerRigid.useGravity = true;
+        playerRigid.isKinematic = false;
+        isLevitating = false;
+    }
+
+    
+    bool isLevitating;
+    public float levitationTime;
 
 
     IEnumerator StartDash(Transform playerTransform)
@@ -46,10 +83,9 @@ public class Dash_Weapon : MonoBehaviour, IFireable
         Invoke("EndDash", dashDuration);
         isDashing = true;
                
-        acceptPlayerInputs = player.GetComponent<FirstPersonMovement>().acceptingMovementInput = false;
+        // acceptPlayerInputs = player.GetComponent<FirstPersonMovement>().acceptingMovementInput = false;
         
         // add look at + latch onto enemy.
-
         
         while (isDashing)
         {            
@@ -59,7 +95,6 @@ public class Dash_Weapon : MonoBehaviour, IFireable
         }
 
         player.GetComponent<FirstPersonMovement>().acceptingMovementInput = true;
-        
 
         transform.rotation = Quaternion.identity;
     }
@@ -73,7 +108,6 @@ public class Dash_Weapon : MonoBehaviour, IFireable
     
    void TiltCamera()
     {
-
         playerCamera.sensitivity = 0;
 
         if (!isDashing)
