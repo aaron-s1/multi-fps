@@ -72,10 +72,10 @@ public class FirstPersonAudio : MonoBehaviour
             {
                 SetPlayingMovingAudio(crouchedAudio);
             }
-            else if (character.IsRunning)
-            {
-                SetPlayingMovingAudio(runningAudio);
-            }
+            // else if (character.IsRunning)
+            // {
+            //     SetPlayingMovingAudio(runningAudio);
+            // }
             else
             {
                 SetPlayingMovingAudio(stepAudio);

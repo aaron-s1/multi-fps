@@ -35,22 +35,15 @@ public class mORB_Weapon : MonoBehaviour, IFireable
     }
 
 
-    public void Fire(GameObject weapon)
+    public void Fire(GameObject instance)
     {        
-        // if (orbIsAlreadyFiring)
-            // return;
-
-        
         transform.parent = player;
-
         StartCoroutine(FireTheMORB());
     }
 
 
-
     IEnumerator FireTheMORB()
     {
-        Debug.Log("morb began firing");
         canKillEnemy = true;
         
         Vector3 forwardDirection = player.forward;

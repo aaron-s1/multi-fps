@@ -97,12 +97,13 @@ public class FireWeapon : MonoBehaviour
         
         ammoLevelText.text = remainingAmmo.ToString();
 
-        Debug.Log("fired");
         ((IFireable)weaponInstanceFiringScript).Fire(currentWeaponInstance);
     }
 
     IEnumerator StartFireCooldown()
     {
+        weaponIsCurrentlyFiring = true;
+
         yield return UpdateWeaponsUI();
 
         float t = 0f;
@@ -110,11 +111,11 @@ public class FireWeapon : MonoBehaviour
         {
             Debug.Log("current weapon on cooldown");
             t += Time.deltaTime;
-            weaponIsCurrentlyFiring = true;
             yield return null;
         }
 
         remainingAmmo++;
+        
         yield return UpdateWeaponsUI();
 
         weaponIsCurrentlyFiring = false;

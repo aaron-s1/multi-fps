@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dash_Weapon : MonoBehaviour
+public class Dash_Weapon : MonoBehaviour, IFireable
 {
     [SerializeField] GameObject player;
     [SerializeField] Rigidbody playerRigid;
@@ -14,9 +14,8 @@ public class Dash_Weapon : MonoBehaviour
     [SerializeField] float dashDuration = 2f;
     
 
-    // bool alreadyDashing;
-    FirstPersonLook firstPersonLookCamera;
-    float originalLookSensitivity;
+    FirstPersonLook playerCamera;
+    float originalCameraSensitivity;
 
     bool canFire;
     bool isDashing;
@@ -32,51 +31,60 @@ public class Dash_Weapon : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).gameObject;
         playerRigid = player.GetComponent<Rigidbody>();
-        acceptPlayerInputs = player.GetComponent<FirstPersonMovement>().acceptingMovementInput;
-        firstPersonLookCamera = player.GetComponentInChildren<FirstPersonLook>();        
+
+        playerCamera = player.GetComponentInChildren<FirstPersonLook>();
+        originalCameraSensitivity = playerCamera.sensitivity;
     }
 
 
-    public void Fire(GameObject weapon) =>
-        StartCoroutine(StartDash());
+    public void Fire(GameObject instance) =>
+        StartCoroutine(StartDash(player.transform));          
 
 
-    IEnumerator StartDash()
+    IEnumerator StartDash(Transform playerTransform)
     {
-        Debug.Log("dash began firing");
-        acceptPlayerInputs = false;
-
-        originalLookSensitivity = firstPersonLookCamera.sensitivity;
-        firstPersonLookCamera.sensitivity = 0;
-
+        Invoke("EndDash", dashDuration);
+        isDashing = true;
+               
+        acceptPlayerInputs = player.GetComponent<FirstPersonMovement>().acceptingMovementInput = false;
+        
         // add look at + latch onto enemy.
 
-        while (isDashing)
-        {
-            playerRigid.velocity = transform.forward * dashSpeed;
-            yield return new WaitForSeconds(dashDuration);
-        }
         
-        isDashing = false;
-        acceptPlayerInputs = true;
+        while (isDashing)
+        {            
+            TiltCamera();
+            playerRigid.velocity = playerTransform.forward * dashSpeed;
+            yield return null;
+        }
 
-        firstPersonLookCamera.sensitivity = originalLookSensitivity;
+        player.GetComponent<FirstPersonMovement>().acceptingMovementInput = true;
+        
+
         transform.rotation = Quaternion.identity;
     }
 
-
-
-    void TiltCameraIfDashing()
+    void EndDash() 
     {
+        playerCamera.sensitivity = originalCameraSensitivity;
+        isDashing = false;
+    }
+
+    
+   void TiltCamera()
+    {
+
+        playerCamera.sensitivity = 0;
+
         if (!isDashing)
-            return;
+            return;        
 
         tiltTimeElapsed += Time.deltaTime;
 
         if (tiltTimeElapsed >= tiltCameraFrequency)
         {
             tiltTimeElapsed = 0f;
-            isTiltingForward = !isTiltingForward;
+            isTiltingForward = !isTiltingForward;            
         }
 
         float tiltAmount = Mathf.PingPong(tiltTimeElapsed / tiltCameraFrequency, 1f);
@@ -85,11 +93,9 @@ public class Dash_Weapon : MonoBehaviour
 
         float tiltZ = Mathf.Lerp(-tiltCameraRange, tiltCameraRange, Mathf.Abs(tiltAmount - 0.5f) * 2f);
 
-        Vector3 rotation = transform.rotation.eulerAngles;
-        rotation.z = tiltZ;
-        transform.rotation = Quaternion.Euler(rotation);
+        Vector3 rotation = playerCamera.transform.rotation.eulerAngles;
 
-        if (tiltTimeElapsed >= tiltCameraDuration)
-            enabled = false;
+        rotation.z = tiltZ;
+        playerCamera.transform.rotation = Quaternion.Euler(rotation);
     }
 }

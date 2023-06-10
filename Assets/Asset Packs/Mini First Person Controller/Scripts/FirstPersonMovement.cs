@@ -5,32 +5,33 @@ using UnityEngine;
 public class FirstPersonMovement : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 5;
-
-    // Not used. Keep run speed at normal speed, running key at where it won't be triggered.
-    [Header("Running")]
-    bool canRun = true;        
-    public bool IsRunning { get; private set; }
+    [HideInInspector] public bool acceptingMovementInput = true;
 
     Rigidbody rigidbody;
+
+    // [Header("Running")]
+    // bool canRun = true;        
+    // public bool IsRunning { get; private set; }
+
+   
     /// <summary> Functions to override movement speed. Will use the last added override. </summary>
     public List<System.Func<float>> speedOverrides = new List<System.Func<float>>();
 
-    public bool acceptingMovementInput = true;
-
+    
 
     void Awake() =>
         rigidbody = GetComponent<Rigidbody>();
 
 
     void FixedUpdate()
-    {
-        // Get targetMovingSpeed.
+    {        
+        if (!acceptingMovementInput)
+            return;
+
         float targetMovingSpeed = moveSpeed;
         if (speedOverrides.Count > 0)
             targetMovingSpeed = speedOverrides[speedOverrides.Count - 1]();
 
-        if (!acceptingMovementInput)
-            return;
 
         Vector2 targetVelocity = new Vector2( Input.GetAxis("Horizontal") * targetMovingSpeed, Input.GetAxis("Vertical") * targetMovingSpeed);
 

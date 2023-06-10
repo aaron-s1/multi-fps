@@ -16,4 +16,4 @@ MonoBehaviour:
   ammoLevel: {fileID: 0}
   weaponDescription: {fileID: 0}
   cooldown: 3
-  ammoCapacity: 5
+  ammoCapacity: 1
