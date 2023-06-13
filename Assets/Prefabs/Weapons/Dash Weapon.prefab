@@ -47,8 +47,10 @@ MonoBehaviour:
   player: {fileID: 0}
   playerRigid: {fileID: 0}
   dashSpeed: 10
-  dashDuration: 1.5
   tiltCameraFrequency: 0.5
   tiltCameraDuration: 5
   tiltCameraRange: 1
-  levitationTime: 1
+  levitateDuration: 1
+  levitateDistance: 3
+  dashDuration: 1
+  dashDistance: 5

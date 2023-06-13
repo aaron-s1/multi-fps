@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class Dash_Weapon : MonoBehaviour, IFireable
 {
+    
     [SerializeField] GameObject player;
     [SerializeField] Rigidbody playerRigid;
     bool acceptPlayerInputs;
 
     [Space(10)]
     [SerializeField] float dashSpeed = 2f;
-    [SerializeField] float dashDuration = 2f;
+    // [SerializeField] float dashDuration = 2f;
     
 
     FirstPersonLook playerCamera;
@@ -34,20 +35,102 @@ public class Dash_Weapon : MonoBehaviour, IFireable
 
         playerCamera = player.GetComponentInChildren<FirstPersonLook>();
         originalCameraSensitivity = playerCamera.sensitivity;
+
+
+
+        
     }
 
 
     public void Fire(GameObject instance)
     {
-        StartCoroutine(StartLevitation(player.transform));
+        StartCoroutine(StartLevitation2(player.transform));
         // StartCoroutine(StartDash(player.transform));
+
     }
+
+    void FixedUpdate()
+    {
+        
+    }
+
+    // public Transform startMarker; // Starting position
+    // public Transform endMarker; // Ending position
+    float elapsedTime = 0f; // Elapsed time for the ler
+
+    [Space(40)]
+    Vector3 startLevitatePosition;
+    Vector3 endLevitatePosition;
+
+    public float levitateDuration;
+    public float levitateDistance;
+
+    Vector3 endDashPosition;
+
+    public float dashDuration;
+    public float dashDistance;
+
+
+
+    IEnumerator StartLevitation2(Transform playerTransform)
+    {
+        acceptPlayerInputs = player.GetComponent<FirstPersonMovement>().acceptingMovementInput = false;
+
+        elapsedTime = 0f;
+        startLevitatePosition = new Vector3(playerTransform.position.x, playerTransform.position.y, playerTransform.position.z);
+        endLevitatePosition = new Vector3(startLevitatePosition.x, startLevitatePosition.y + levitateDistance, startLevitatePosition.z);
+
+        endDashPosition = new Vector3(playerTransform.position.x, playerTransform.position.y, playerTransform.position.z + dashDistance);
+
+
+        while (elapsedTime < levitateDuration)
+        {
+            player.transform.position = Vector3.Lerp(startLevitatePosition, endLevitatePosition, elapsedTime / levitateDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        player.transform.position = endLevitatePosition;
+
+        yield return StartCoroutine(StartDash2(playerTransform));        
+    }
+
+    IEnumerator StartDash2(Transform playerTransform)
+    {
+        elapsedTime = 0f;
+
+        // endLevitatePosition = GetLerpTarget(playerTransform, levitateDistance);
+
+        while (elapsedTime < dashDuration)
+        {
+            player.transform.position = Vector3.Lerp(endLevitatePosition, endDashPosition, elapsedTime / dashDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        elapsedTime = 0f;
+
+        player.transform.position = endDashPosition; 
+
+        yield break;
+    }
+
+
+
+    // Vector3 GetLerpTarget(Transform playerTransform, Vector3 distanceOffset) 
+    // {
+    //     return new Vector3 (
+    //     playerTransform.position.x + distanceOffset.x,
+    //     playerTransform.position.y + distanceOffset.y,
+    //     playerTransform.position.z + distanceOffset.z
+    //     );
+    // }
 
 
     IEnumerator StartLevitation(Transform playerTransform)
     {
         acceptPlayerInputs = player.GetComponent<FirstPersonMovement>().acceptingMovementInput = false;
-        Invoke("EndLevitation", levitationTime);
+        // Invoke("EndLevitation", levitationTime);
         isLevitating = true;
         // playerRigid.useGravity = false;
 
@@ -56,7 +139,7 @@ public class Dash_Weapon : MonoBehaviour, IFireable
 
         while (isLevitating)
         {
-            playerRigid.velocity = playerTransform.up * 1f;
+            playerRigid.velocity = playerTransform.up * 3f;
             yield return null;
         }
 
@@ -68,14 +151,14 @@ public class Dash_Weapon : MonoBehaviour, IFireable
 
     void EndLevitation()
     {
-        playerRigid.useGravity = true;
+        // playerRigid.useGravity = true;
         playerRigid.isKinematic = false;
         isLevitating = false;
     }
 
     
     bool isLevitating;
-    public float levitationTime;
+    // public float levitationTime;
 
 
     IEnumerator StartDash(Transform playerTransform)
@@ -91,6 +174,7 @@ public class Dash_Weapon : MonoBehaviour, IFireable
         {            
             TiltCamera();
             playerRigid.velocity = playerTransform.forward * dashSpeed;
+            playerRigid.velocity = -playerTransform.up * dashSpeed * 0.2f;
             yield return null;
         }
 
