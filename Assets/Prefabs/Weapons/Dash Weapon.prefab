@@ -50,7 +50,7 @@ MonoBehaviour:
   tiltCameraFrequency: 0.5
   tiltCameraDuration: 5
   tiltCameraRange: 1
-  levitateDuration: 1
-  levitateDistance: 3
-  dashDuration: 1
-  dashDistance: 5
+  levitateDuration: 0.25
+  levitateDistance: 2
+  dashDuration: 0.5
+  dashDistance: 10

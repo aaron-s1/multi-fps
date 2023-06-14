@@ -81,7 +81,7 @@ public class Dash_Weapon : MonoBehaviour, IFireable
         endLevitatePosition = new Vector3(startLevitatePosition.x, startLevitatePosition.y + levitateDistance, startLevitatePosition.z);
 
         // endDashPosition = new Vector3(player.transform.localPosition.x, player.transform.localPosition.y, player.transform.localPosition.z + dashDistance);
-        endDashPosition = player.transform.position + playerTransform.forward * dashDistance;
+        endDashPosition = player.transform.localPosition + playerTransform.forward * dashDistance;
 
 
         while (elapsedTime < levitateDuration)
@@ -111,7 +111,10 @@ public class Dash_Weapon : MonoBehaviour, IFireable
 
         elapsedTime = 0f;
 
-        player.transform.localPosition = endDashPosition; 
+        player.transform.localPosition = endDashPosition;
+        acceptPlayerInputs = player.GetComponent<FirstPersonMovement>().acceptingMovementInput = false;
+        Debug.Log("dash has ended");
+        Debug.Log(player.transform.localPosition);
 
         yield break;
     }
