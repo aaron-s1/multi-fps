@@ -44,13 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42518aea86c64974bb395b620d21b614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  playerRigid: {fileID: 0}
-  dashSpeed: 10
-  tiltCameraFrequency: 0.5
-  tiltCameraDuration: 5
-  tiltCameraRange: 1
   levitateDuration: 0.25
   levitateDistance: 2
+  levitateUpwardsPullbackDistance: 3
   dashDuration: 0.5
   dashDistance: 10

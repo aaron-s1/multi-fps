@@ -8,6 +8,7 @@ public class Dash_Weapon : MonoBehaviour, IFireable
 
     [SerializeField] float levitateDuration;
     [SerializeField] float levitateDistance;
+    [SerializeField] float levitateUpwardsPullbackDistance;
 
     [SerializeField] float dashDuration;
     [SerializeField] float dashDistance;
@@ -21,6 +22,7 @@ public class Dash_Weapon : MonoBehaviour, IFireable
 
     void Awake()
     {
+        // get player controller
         player = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).gameObject;
         playerRigid = player.GetComponent<Rigidbody>();
     }
@@ -35,22 +37,27 @@ public class Dash_Weapon : MonoBehaviour, IFireable
         acceptPlayerInputs = player.GetComponent<FirstPersonMovement>().acceptingMovementInput = false;
 
         elapsedTime = 0f;
-        Vector3 startLevitatePosition = new Vector3(player.transform.localPosition.x, player.transform.localPosition.y, player.transform.localPosition.z);
-        Vector3 endLevitatePosition = new Vector3(startLevitatePosition.x, startLevitatePosition.y + levitateDistance, startLevitatePosition.z);
+        Vector3 startPosition = new Vector3(player.transform.localPosition.x, player.transform.localPosition.y, player.transform.localPosition.z);
+        Vector3 endPosition = player.transform.localPosition
+                              + playerTransform.up * levitateDistance
+                              + -playerTransform.forward * levitateUpwardsPullbackDistance;
+
+        // Vector3 endPosition = new Vector3(startPosition.x, startPosition.y + levitateDistance, startPosition.z);
+
 
         Vector3 endDashPosition = player.transform.localPosition + playerTransform.forward * dashDistance;
 
 
         while (elapsedTime < levitateDuration)
         {
-            player.transform.localPosition = Vector3.Lerp(startLevitatePosition, endLevitatePosition, elapsedTime / levitateDuration);
+            player.transform.localPosition = Vector3.Lerp(startPosition, endPosition, elapsedTime / levitateDuration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        player.transform.localPosition = endLevitatePosition;
+        player.transform.localPosition = endPosition;
 
-        yield return StartCoroutine(StartDash(playerTransform, endLevitatePosition, endDashPosition));        
+        yield return StartCoroutine(StartDash(playerTransform, endPosition, endDashPosition));        
     }
 
     IEnumerator StartDash(Transform playerTransform, Vector3 endLevitatePosition, Vector3 endDashPosition)
