@@ -77,20 +77,21 @@ public class Dash_Weapon : MonoBehaviour, IFireable
         acceptPlayerInputs = player.GetComponent<FirstPersonMovement>().acceptingMovementInput = false;
 
         elapsedTime = 0f;
-        startLevitatePosition = new Vector3(playerTransform.position.x, playerTransform.position.y, playerTransform.position.z);
+        startLevitatePosition = new Vector3(player.transform.localPosition.x, player.transform.localPosition.y, player.transform.localPosition.z);
         endLevitatePosition = new Vector3(startLevitatePosition.x, startLevitatePosition.y + levitateDistance, startLevitatePosition.z);
 
-        endDashPosition = new Vector3(playerTransform.position.x, playerTransform.position.y, playerTransform.position.z + dashDistance);
+        // endDashPosition = new Vector3(player.transform.localPosition.x, player.transform.localPosition.y, player.transform.localPosition.z + dashDistance);
+        endDashPosition = player.transform.position + playerTransform.forward * dashDistance;
 
 
         while (elapsedTime < levitateDuration)
         {
-            player.transform.position = Vector3.Lerp(startLevitatePosition, endLevitatePosition, elapsedTime / levitateDuration);
+            player.transform.localPosition = Vector3.Lerp(startLevitatePosition, endLevitatePosition, elapsedTime / levitateDuration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        player.transform.position = endLevitatePosition;
+        player.transform.localPosition = endLevitatePosition;
 
         yield return StartCoroutine(StartDash2(playerTransform));        
     }
@@ -103,14 +104,14 @@ public class Dash_Weapon : MonoBehaviour, IFireable
 
         while (elapsedTime < dashDuration)
         {
-            player.transform.position = Vector3.Lerp(endLevitatePosition, endDashPosition, elapsedTime / dashDuration);
+            player.transform.localPosition = Vector3.Lerp(endLevitatePosition, endDashPosition, elapsedTime / dashDuration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         elapsedTime = 0f;
 
-        player.transform.position = endDashPosition; 
+        player.transform.localPosition = endDashPosition; 
 
         yield break;
     }
@@ -120,9 +121,9 @@ public class Dash_Weapon : MonoBehaviour, IFireable
     // Vector3 GetLerpTarget(Transform playerTransform, Vector3 distanceOffset) 
     // {
     //     return new Vector3 (
-    //     playerTransform.position.x + distanceOffset.x,
-    //     playerTransform.position.y + distanceOffset.y,
-    //     playerTransform.position.z + distanceOffset.z
+    //     player.transform.localPositionx + distanceOffset.x,
+    //     player.transform.localPositiony + distanceOffset.y,
+    //     player.transform.localPositionz + distanceOffset.z
     //     );
     // }
 
