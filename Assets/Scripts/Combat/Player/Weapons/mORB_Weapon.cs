@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class mORB_Weapon : MonoBehaviour, IFireable
 {
@@ -22,7 +23,8 @@ public class mORB_Weapon : MonoBehaviour, IFireable
     bool orbIsAlreadyFiring;
     bool canKillEnemy;
 
-    static GameObject prefabInstance;
+    // static GameObject prefabInstance;
+    
 
     void Awake()
     {
@@ -32,6 +34,16 @@ public class mORB_Weapon : MonoBehaviour, IFireable
         transform.localPosition = startPositionLocal = UI_offsetPosition;
 
         startRotationLocal = transform.localRotation;
+    }
+
+    public float Cooldown
+    {
+        get {
+            return 1f;
+        }
+        set {
+            throw new NotImplementedException();
+        }
     }
 
 

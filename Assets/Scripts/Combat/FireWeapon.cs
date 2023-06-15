@@ -39,7 +39,7 @@ public class FireWeapon : MonoBehaviour
 
 
         if (Input.GetMouseButtonDown(0))
-            Fire();
+            Firing();
     }
 
 
@@ -63,9 +63,11 @@ public class FireWeapon : MonoBehaviour
         currentWeaponInstance = Instantiate(currentWeapon.equippedPrefab, transform.position, transform.rotation);
         currentWeaponInstance.SetActive(true);
 
+
         weaponInstanceFiringScript = FindFiringScriptOfNewWeapon(currentWeaponInstance);
 
         remainingAmmo = currentWeapon.ammoCapacity;
+
         yield return UpdateWeaponsUI(true);
 
         weaponIsCurrentlyFiring = false;
@@ -82,34 +84,40 @@ public class FireWeapon : MonoBehaviour
     }
 
 
-    // The created Game Object instance of a Weapon sets its own conditions on if it actually fires.
-    public void Fire()
+    
+    public void Firing()
     {        
         if (weaponIsCurrentlyFiring)
             return;
-
         if (remainingAmmo <= 0)
             return;
         
-        remainingAmmo--;        
-
-        StartCoroutine(StartFireCooldown());
         
+        remainingAmmo--;        
         ammoLevelText.text = remainingAmmo.ToString();
 
+
         ((IFireable)weaponInstanceFiringScript).Fire(currentWeaponInstance);
+        StartCoroutine(StartFireCooldown());
     }
 
+
+    // Cumulative cooldown may not be known due to numbers still being tweaked.
+    // This is why a hardcoded cooldown within a Weapons' scriptable object is not used (for now).
+    // Getter/setter for cooldown temporarily(?) implemented onto interface.
     IEnumerator StartFireCooldown()
     {
         weaponIsCurrentlyFiring = true;
 
+        float cooldown = weaponInstanceFiringScript.GetComponent<IFireable>().Cooldown;
+
         yield return UpdateWeaponsUI();
 
         float t = 0f;
-        while (t < currentWeapon.cooldown)
+
+        // while (t < currentWeapon.cooldown)
+        while (t < cooldown)
         {
-            Debug.Log("current weapon on cooldown");
             t += Time.deltaTime;
             yield return null;
         }
@@ -122,7 +130,6 @@ public class FireWeapon : MonoBehaviour
 
         yield break;
     }
-
 
 
     // Find the weapon's script, regardless of that script's name, that implements IFireable.

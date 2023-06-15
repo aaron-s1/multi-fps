@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Dash_Weapon : MonoBehaviour, IFireable
 {
+    [HideInInspector] public float cooldown;
 
     [SerializeField] float levitateDuration;
     [SerializeField] float levitateDistance;
@@ -13,6 +14,7 @@ public class Dash_Weapon : MonoBehaviour, IFireable
     [SerializeField] float dashDuration;
     [SerializeField] float dashDistance;
 
+
     GameObject player;
     Rigidbody playerRigid;
       
@@ -20,16 +22,32 @@ public class Dash_Weapon : MonoBehaviour, IFireable
 
     bool acceptPlayerInputs;
 
+
     void Awake()
     {
-        // get player controller
+        // get player's actual controller
         player = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).gameObject;
         playerRigid = player.GetComponent<Rigidbody>();
+
+        
+    }
+
+    
+    public float Cooldown
+    {
+        get {
+            return levitateDuration + dashDuration + (Time.deltaTime * 3);  // (adding an extra offset)
+        }
+        set {
+            throw new NotImplementedException();
+        }
     }
 
 
-    public void Fire(GameObject instance) =>
-        StartCoroutine(StartLevitation(player.transform));
+    public void Fire(GameObject instance) 
+    {
+        StartCoroutine(StartLevitation(player.transform));                
+    }
 
 
     IEnumerator StartLevitation(Transform playerTransform)
@@ -74,7 +92,9 @@ public class Dash_Weapon : MonoBehaviour, IFireable
         elapsedTime = 0f;
 
         player.transform.localPosition = endDashPosition;
-        acceptPlayerInputs = player.GetComponent<FirstPersonMovement>().acceptingMovementInput = false;
+        acceptPlayerInputs = player.GetComponent<FirstPersonMovement>().acceptingMovementInput = true;
+
+        // tell x to reset cooldown
 
         yield break;
     }
