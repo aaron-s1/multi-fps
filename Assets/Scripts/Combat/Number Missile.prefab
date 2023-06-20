@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2861291916241424034}
   - component: {fileID: 2861291916241424035}
   m_Layer: 7
-  m_Name: Missile #7
+  m_Name: Number Missile
   m_TagString: NumberMissile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,13 +144,13 @@ GameObject:
   - component: {fileID: 2861291917888885596}
   - component: {fileID: 2861291917888885569}
   - component: {fileID: 2861291917888885598}
-  - component: {fileID: 2861291917888885568}
-  - component: {fileID: 1317316784}
   - component: {fileID: 2322936645766462502}
   - component: {fileID: 1842970500143127848}
+  - component: {fileID: 2861291917888885568}
+  - component: {fileID: 1317316784}
   - component: {fileID: 3487700728212617398}
   m_Layer: 7
-  m_Name: Text (TMP) (1)
+  m_Name: Text (TMP)
   m_TagString: NumberMissile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -275,36 +275,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &2861291917888885568
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2861291917888885597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c170f0776ffe685438a9101d9269c55d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
---- !u!114 &1317316784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2861291917888885597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c43bc071b81ea3140bc771feebba9470, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  playerPosAtInstantiation: {x: 0, y: 0, z: 0}
-  playerPos_Y_Offset: 1
-  moveSpeed: 10
-  missileDamageValue: 0
 --- !u!54 &2322936645766462502
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -334,6 +304,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.9707177, y: 3.9676151, z: 1}
   m_Center: {x: 1.6969509, y: 2.0787125, z: -0.00000058355215}
+--- !u!114 &2861291917888885568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861291917888885597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c170f0776ffe685438a9101d9269c55d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+--- !u!114 &1317316784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861291917888885597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c43bc071b81ea3140bc771feebba9470, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  playerPosAtInstantiation: {x: 0, y: 0, z: 0}
+  playerPos_Y_Offset: 1.25
+  moveSpeed: 10
+  missileDamageValue: 0
 --- !u!114 &3487700728212617398
 MonoBehaviour:
   m_ObjectHideFlags: 0

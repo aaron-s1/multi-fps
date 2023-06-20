@@ -30,8 +30,10 @@ General Level Design
 
 Enemies
 - More humanoid enemy variety
-- Boss: x, King of Contrarians
+- Boss: Armond White, King of Contrarians
     ~ Ability: Fast-moving number traps on ground that travel towards play and must be dodged.
+    ~ more abilities
+
     
 
 

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Move : MonoBehaviour
+public class MissileMovesTowardsPlayer : MonoBehaviour
 {
     [SerializeField] GameObject player;
     [SerializeField] Vector3 playerPosAtInstantiation;
     [SerializeField] float playerPos_Y_Offset;
     [SerializeField] float moveSpeed;
 
-    [SerializeField] int missileDamageValue;
+    int missileDamageValue;
 
     float distanceToDestination;
 
@@ -25,32 +25,25 @@ public class Move : MonoBehaviour
                                                 playerPosAtInstantiation.z);
     }
 
-    void Start()
-    {
+    void Start() =>
         missileDamageValue = GetComponent<AssignRandomDamageValue>().GetValue();
-    }
+
 
     void FixedUpdate()
     {
         var step =  moveSpeed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, playerPosAtInstantiation, step);
-        // transform.position += transform.forward * step;
-
         
         distanceToDestination = Vector3.Distance(transform.position, playerPosAtInstantiation);
 
         if (distanceToDestination < 0.04f)
-        {
-            Destroy(gameObject);
-        }
+            gameObject.SetActive(false);
     }
+
 
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == player)
-        {
-            Debug.Log("hit player");
             player.GetComponent<Health>().TakeDamage(missileDamageValue);
-        }
     }
 }

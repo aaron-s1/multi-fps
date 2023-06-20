@@ -5,74 +5,83 @@ using UnityEngine;
 
 public class SearchForPlayer : MonoBehaviour
 {
-    [SerializeField] GameObject numberMissile;
+    [SerializeField] GameObject numberBulletPrefab;
+    [SerializeField] float fireRate = 1f;
+    [SerializeField] int bulletPoolSize = 10;
+
+    [Space(10)]
     [SerializeField] Transform playerPos;
     [SerializeField] float viewDistance;
     [SerializeField] float viewAngle;
 
-    Coroutine fireMissile;
+
+    List<GameObject> bulletPool;
+
     bool canFire = true;
-    bool firingAlreadyPrimed;
-    float fireRate = 1f;
 
 
-    void Start()
-    {
-        // Prime firing.
-        StartCoroutine(StartFiring());
-    }
+
+    void Start() =>
+        CreateNewBulletPool();
     
-    void Update()
+    void Update() =>
+        FindPlayer();
+
+    
+    void FindPlayer()
     {
-        Search();
-        //     Fire();
-        // else
-        //     Debug.Log("player not found");
-    }
+        if (!canFire)
+            return;
 
-    // void Fire()
-    // {
-    //     Debug.Log("player found");
-    //     Instantiate(numberMissile, transform.position, transform.rotation);
-    // }
-
-    void Search()
-     {
         if (Vector3.Distance(transform.position, playerPos.position) < viewDistance)
         {
             Vector3 directionToPlayer = (playerPos.position - transform.position).normalized;
             float angleBetweenGuardAndPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+
             if (angleBetweenGuardAndPlayer < viewAngle / 2)
             {
-                // canFire = true;
-                
-                // Debug.Log("viewAngle " + viewAngle);
                 if (Physics.Linecast(transform.position, playerPos.position))
-                {
-                    if (canFire)
-                        StartCoroutine(StartFiring());
-                }
+                    StartCoroutine(StartFiring());
             }
         }
+    }
 
-        // canFire = false;
-        // return false;
-     }
 
     IEnumerator StartFiring()
     {
-        // Debug.Log("StartFiring()");
-        // if (canFire)
-        // {
-            // Debug.Log("StartF/iring() is firing");
         canFire = false;
+
+        GameObject bullet = Instantiate(GetBulletFromPool());
+        bullet.transform.position = transform.position;
+        bullet.SetActive(true);
+
         yield return new WaitForSeconds(fireRate);
-        Instantiate(numberMissile, transform.position, transform.rotation);
-        
-        // }
+
         canFire = true;
 
-        Debug.Log("StartFiring() returned");
-        yield return null;        
+        yield break;
+    }
+
+
+    void CreateNewBulletPool()
+    {
+        bulletPool = new List<GameObject>();
+
+        for (int i = 0; i < bulletPoolSize; i++)
+        {
+            GameObject bullet = Instantiate(numberBulletPrefab);
+            bullet.SetActive(false);
+            bulletPool.Add(bullet);
+        }
+    }
+
+    GameObject GetBulletFromPool()
+    {
+        for (int i = 0; i < bulletPool.Count; i++)
+        {
+            if (!bulletPool[i].activeInHierarchy)
+                return bulletPool[i];
+        }
+        return null;
     }
 }

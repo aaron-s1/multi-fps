@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class DamagePlayer : MonoBehaviour
+public class FloorTrapDamagesPlayer : MonoBehaviour
 {
     GameObject player;
     float textValue;
@@ -18,7 +18,6 @@ public class DamagePlayer : MonoBehaviour
     {
         if (other.gameObject == player)
         {
-            Debug.Log(gameObject + " did " + textValue + " to " + player);
             player.GetComponent<Health>().TakeDamage(textValue);
         }
     }
