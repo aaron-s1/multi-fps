@@ -10,7 +10,9 @@ public class Health : MonoBehaviour
     [SerializeField] TextMeshProUGUI ratingText;      // "rating" = health
 
     void Awake() =>
-        UpdateHealth();
+        UpdateHealthText();
+
+
 
 
     public void TakeDamage(float damage)
@@ -20,9 +22,9 @@ public class Health : MonoBehaviour
         
         health = roundedHealth;
 
-        UpdateHealth();
+        UpdateHealthText();
     }
 
-    void UpdateHealth() =>
+    void UpdateHealthText() =>
         ratingText.text = health.ToString();
 }

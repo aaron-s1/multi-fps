@@ -28,8 +28,6 @@ public class Dash_Weapon : MonoBehaviour, IFireable
         // get player's actual controller
         player = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).gameObject;
         playerRigid = player.GetComponent<Rigidbody>();
-
-        
     }
 
     

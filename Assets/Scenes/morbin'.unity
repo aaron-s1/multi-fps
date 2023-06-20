@@ -3431,6 +3431,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1195415760139927943, guid: aae952dc76387e84287a598d901b120d, type: 3}
   m_PrefabInstance: {fileID: 737983944}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1220721718 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8667319600349559101, guid: 2b913730db7a16c4bb117b7604511879, type: 3}
+  m_PrefabInstance: {fileID: 3529843711320715641}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1260728943
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4360,6 +4365,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1592790022, guid: cf9497c3c6fb68144a751e35af531cad, type: 3}
+      propertyPath: playerPos
+      value: 
+      objectReference: {fileID: 1220721718}
+    - target: {fileID: 1592790026, guid: cf9497c3c6fb68144a751e35af531cad, type: 3}
+      propertyPath: moveSpeed
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1592790026, guid: cf9497c3c6fb68144a751e35af531cad, type: 3}
       propertyPath: floorTrapPrefab
       value: 
@@ -5244,11 +5257,15 @@ PrefabInstance:
       objectReference: {fileID: 498915254}
     - target: {fileID: 8667319600349559101, guid: 2b913730db7a16c4bb117b7604511879, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 16.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8667319600349559101, guid: 2b913730db7a16c4bb117b7604511879, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.9499998
       objectReference: {fileID: 0}
     - target: {fileID: 8667319600349559101, guid: 2b913730db7a16c4bb117b7604511879, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 86.5
       objectReference: {fileID: 0}
     - target: {fileID: 8667319600349559101, guid: 2b913730db7a16c4bb117b7604511879, type: 3}
       propertyPath: m_LocalRotation.w

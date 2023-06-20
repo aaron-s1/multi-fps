@@ -6,7 +6,7 @@ public class NumberFloorSpawner : MonoBehaviour
 {
 
     [SerializeField] GameObject floorTrapPrefab;
-    [SerializeField] float moveSpeed = 1f;    
+    [SerializeField] float moveSpeed = 1f;
 
     GameObject floorTrap;
 
