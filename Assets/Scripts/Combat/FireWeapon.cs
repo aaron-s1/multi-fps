@@ -115,7 +115,7 @@ public class FireWeapon : MonoBehaviour
 
         float t = 0f;
 
-        // while (t < currentWeapon.cooldown)
+
         while (t < cooldown)
         {
             t += Time.deltaTime;

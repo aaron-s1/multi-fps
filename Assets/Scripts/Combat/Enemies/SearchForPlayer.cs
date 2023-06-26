@@ -11,6 +11,7 @@ public class SearchForPlayer : MonoBehaviour
 
     [Space(10)]
     [SerializeField] Transform playerPos;
+    [SerializeField] Vector3 playerPosOffset;
     [SerializeField] float viewDistance;
     [SerializeField] float viewAngle;
 
@@ -24,21 +25,28 @@ public class SearchForPlayer : MonoBehaviour
     void Start() =>
         CreateNewBulletPool();
     
-    void Update() =>
+    void FixedUpdate() =>
         FindPlayer();
 
+
     
+    
+
     void FindPlayer()
     {
         if (!canFire)
             return;
 
+        canFire = false;
+
+        // playerPos.position = playerPos.position + new Vector3(playerPosOffset.x, playerPosOffset.y, playerPosOffset.z);
+
         if (Vector3.Distance(transform.position, playerPos.position) < viewDistance)
         {
             Vector3 directionToPlayer = (playerPos.position - transform.position).normalized;
-            float angleBetweenGuardAndPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+            float angleBetweenSelfAndPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
-            if (angleBetweenGuardAndPlayer < viewAngle / 2)
+            if (angleBetweenSelfAndPlayer < viewAngle / 2)
             {
                 if (Physics.Linecast(transform.position, playerPos.position))
                     StartCoroutine(StartFiring());
@@ -51,15 +59,37 @@ public class SearchForPlayer : MonoBehaviour
     {
         canFire = false;
 
-        GameObject bullet = Instantiate(GetBulletFromPool());
-        bullet.transform.position = transform.position;
-        bullet.SetActive(true);
+        GameObject bullet = GetBulletFromPool();
+
+
+        if (bullet != null)
+        {
+            var bulletTextPosition = bullet.transform.GetChild(0).position;
+            bullet.transform.position = transform.position;
+            bullet.transform.GetChild(0).position = transform.position;
+
+            bullet.SetActive(true);
+        }
+
+        else
+            Debug.Log("Bullet pool returned no bullet.");
+
 
         yield return new WaitForSeconds(fireRate);
-
+        
         canFire = true;
+    }
 
-        yield break;
+
+    GameObject GetBulletFromPool()
+    {
+        for (int i = 0; i < bulletPool.Count; i++)
+        {
+            if (!bulletPool[i].activeInHierarchy)
+                return bulletPool[i];
+        }
+
+        return null;
     }
 
 
@@ -73,15 +103,5 @@ public class SearchForPlayer : MonoBehaviour
             bullet.SetActive(false);
             bulletPool.Add(bullet);
         }
-    }
-
-    GameObject GetBulletFromPool()
-    {
-        for (int i = 0; i < bulletPool.Count; i++)
-        {
-            if (!bulletPool[i].activeInHierarchy)
-                return bulletPool[i];
-        }
-        return null;
     }
 }

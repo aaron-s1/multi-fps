@@ -14,6 +14,7 @@ public class MissileMovesTowardsPlayer : MonoBehaviour
 
     float distanceToDestination;
 
+
     
     void Awake()
     {
@@ -22,11 +23,13 @@ public class MissileMovesTowardsPlayer : MonoBehaviour
 
         playerPosAtInstantiation = new Vector3 (playerPosAtInstantiation.x,
                                                 playerPosAtInstantiation.y + playerPos_Y_Offset,
-                                                playerPosAtInstantiation.z);
+                                                playerPosAtInstantiation.z);                                            
     }
+
 
     void Start() =>
         missileDamageValue = GetComponent<AssignRandomDamageValue>().GetValue();
+
 
 
     void FixedUpdate()
@@ -35,15 +38,15 @@ public class MissileMovesTowardsPlayer : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, playerPosAtInstantiation, step);
         
         distanceToDestination = Vector3.Distance(transform.position, playerPosAtInstantiation);
-
-        if (distanceToDestination < 0.04f)
-            gameObject.SetActive(false);
     }
 
 
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == player)
+        {
+            transform.parent.gameObject.SetActive(false);
             player.GetComponent<Health>().TakeDamage(missileDamageValue);
+        }
     }
 }

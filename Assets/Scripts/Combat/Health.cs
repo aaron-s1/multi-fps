@@ -13,10 +13,9 @@ public class Health : MonoBehaviour
         UpdateHealthText();
 
 
-
-
     public void TakeDamage(float damage)
     {
+        Debug.Log("player took damage");
         var averagedPostDamageHealth = (health + damage) / 2f;
         var roundedHealth = (Mathf.Round(averagedPostDamageHealth * 100)) / 100.0f;
         
@@ -24,6 +23,7 @@ public class Health : MonoBehaviour
 
         UpdateHealthText();
     }
+    
 
     void UpdateHealthText() =>
         ratingText.text = health.ToString();
