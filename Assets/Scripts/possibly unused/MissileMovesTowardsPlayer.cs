@@ -5,30 +5,31 @@ using TMPro;
 
 public class MissileMovesTowardsPlayer : MonoBehaviour
 {
-    [SerializeField] GameObject player;
+    GameObject player;
+
     [SerializeField] Vector3 playerPosAtInstantiation;
     [SerializeField] float playerPos_Y_Offset;
     [SerializeField] float moveSpeed;
 
-    int missileDamageValue;
+    // int missileDamageValue;
 
     float distanceToDestination;
 
 
-    
+
     void Awake()
     {
         player = GameObject.Find("Player").transform.GetChild(0).gameObject;
-        playerPosAtInstantiation = player.transform.position;
 
+        playerPosAtInstantiation = player.transform.position;
         playerPosAtInstantiation = new Vector3 (playerPosAtInstantiation.x,
                                                 playerPosAtInstantiation.y + playerPos_Y_Offset,
                                                 playerPosAtInstantiation.z);                                            
     }
 
 
-    void Start() =>
-        missileDamageValue = GetComponent<AssignRandomDamageValue>().GetValue();
+    // void Start() =>
+        // missileDamageValue = GetComponent<AssignRandomDamageValue>().GetValue();
 
 
 
@@ -41,12 +42,12 @@ public class MissileMovesTowardsPlayer : MonoBehaviour
     }
 
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == player)
-        {
-            transform.parent.gameObject.SetActive(false);
-            player.GetComponent<Health>().TakeDamage(missileDamageValue);
-        }
-    }
+    // void OnTriggerEnter(Collider other)
+    // {
+    //     if (other.gameObject == player)
+    //     {
+    //         transform.parent.gameObject.SetActive(false);
+    //         player.GetComponent<Health>().TakeDamage(missileDamageValue);
+    //     }
+    // }
 }

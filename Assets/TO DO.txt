@@ -9,6 +9,7 @@ General Ideas:
 
 Player Design
 - Tighten up controller
+- Determine better way to handle health, and how to die
 
 
 
@@ -25,7 +26,7 @@ Weapons
 General Level Design
 - Doom: indoors, sci-fi
 - Metal Hellsing: outdoors, Mars-like
-- Dusk: outdoors (to promote speed jumping), low polygon 
+- Dusk: outdoors (to promote speed jumping), very low polygon 
 
 
 Enemies

@@ -9,14 +9,11 @@ public class AssignRandomDamageValue : MonoBehaviour
 
     int randomNumber;
     
-    void Awake()
-    {
-        randomNumber = Random.Range(1, 9);
-        damageNumberText.text = randomNumber.ToString();         
-    }
 
-    public int GetValue()
+    public int GetRandomValue(int minRange, int maxRange)
     {
+        randomNumber = Random.Range(minRange, maxRange);
+        damageNumberText.text = randomNumber.ToString(); 
         return randomNumber;
     }
 }
