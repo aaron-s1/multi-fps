@@ -86,7 +86,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &3574225120295036908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,7 +116,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68be0560b0eabb4d8796466c8f8bf23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomizeNumber: 0
+  randomizeDamage: 1
+  minRandomDamage: 1
+  maxRandomDamage: 9
   disableSelfOnHit: 0
 --- !u!65 &8374030743662618701
 BoxCollider:

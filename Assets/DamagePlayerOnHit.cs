@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class DamagePlayerOnHit : MonoBehaviour
 {
@@ -21,21 +22,31 @@ public class DamagePlayerOnHit : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player").transform.GetChild(0).gameObject;
-        
-        if (randomizeDamage)
-        {
-            if (!gameObject.GetComponent<AssignRandomDamageValue>())
-                gameObject.AddComponent<AssignRandomDamageValue>();
-
-            // missileDamageValue = GetComponent<AssignRandomDamageValue>().GetRandomValue(randomizationRange);
-            GetComponentInChildren<TextMeshPro>().text = missileDamageValue.ToString();
-
-            return;
-        }
-
-        missileDamageValue = int.Parse(GetComponentInChildren<TextMeshPro>().text);
+        SetDamage();
     }
 
+    void SetDamage()
+    {
+        TextMeshProUGUI textDamage;
+
+        try
+        {
+            textDamage = GetComponent<TextMeshProUGUI>();
+        }
+        catch (System.Exception)
+        {
+            textDamage = GetComponentInChildren<TextMeshProUGUI>();
+        }
+
+        if (randomizeDamage)
+        {
+            missileDamageValue = UnityEngine.Random.Range(minRandomDamage, maxRandomDamage);
+            textDamage.text = missileDamageValue.ToString();
+        }
+        else missileDamageValue = int.Parse(textDamage.text);
+    }
+
+    
 
     void OnTriggerEnter(Collider other)
     {
