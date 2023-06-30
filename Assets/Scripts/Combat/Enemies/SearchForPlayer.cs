@@ -5,40 +5,46 @@ using UnityEngine;
 
 public class SearchForPlayer : MonoBehaviour
 {
-    [SerializeField] GameObject numberBulletPrefab;
-    [SerializeField] float fireRate = 1f;
-    [SerializeField] int bulletPoolSize = 10;
+    [SerializeField] bool isRanged;
 
     [Space(10)]
     [SerializeField] Transform playerPos;
-    [SerializeField] Vector3 playerPosOffset;
+    [SerializeField] float playerPosYOffset;
     [SerializeField] float viewDistance;
     [SerializeField] float viewAngle;
 
 
     List<GameObject> bulletPool;
 
-    bool canFire = true;
+    MonoBehaviour attackScript;
 
 
+    void Start()
+    {
+        playerPos = GameObject.Find("Player").transform.GetChild(0);
+        SendMessage("PrepareAttack");
+    }
 
-    void Start() =>
-        CreateNewBulletPool();
-    
+
+    bool CanSearch()
+    {
+        if (!isRanged)
+            return GetComponent<EnemyMeleeAttack>().CanAttack();
+        else
+            return GetComponent<EnemyFiresBullet>().CanAttack();
+    }
+
+
     void FixedUpdate() =>
         FindPlayer();
 
 
-    
-    
-
     void FindPlayer()
     {
-        if (!canFire)
+        if (!CanSearch())
             return;
 
-        canFire = false;
-
+        playerPos.position = new Vector3 (playerPos.position.x, playerPos.position.y + playerPosYOffset, playerPos.position.z);
         // playerPos.position = playerPos.position + new Vector3(playerPosOffset.x, playerPosOffset.y, playerPosOffset.z);
 
         if (Vector3.Distance(transform.position, playerPos.position) < viewDistance)
@@ -49,59 +55,10 @@ public class SearchForPlayer : MonoBehaviour
             if (angleBetweenSelfAndPlayer < viewAngle / 2)
             {
                 if (Physics.Linecast(transform.position, playerPos.position))
-                    StartCoroutine(StartFiring());
+                    SendMessage("BeginAttack", playerPos);
+                // if (Physics.Linecast(transform.position, playerPos.position))
+                //     SendMessage("BeginAttack", playerPos, playerPosOffset);
             }
-        }
-    }
-
-
-    IEnumerator StartFiring()
-    {
-        canFire = false;
-
-        GameObject bullet = GetBulletFromPool();
-
-
-        if (bullet != null)
-        {
-            var bulletTextPosition = bullet.transform.GetChild(0).position;
-            bullet.transform.position = transform.position;
-            bullet.transform.GetChild(0).position = transform.position;
-
-            bullet.SetActive(true);
-        }
-
-        else
-            Debug.Log("Bullet pool returned no bullet.");
-
-
-        yield return new WaitForSeconds(fireRate);
-        
-        canFire = true;
-    }
-
-
-    GameObject GetBulletFromPool()
-    {
-        for (int i = 0; i < bulletPool.Count; i++)
-        {
-            if (!bulletPool[i].activeInHierarchy)
-                return bulletPool[i];
-        }
-
-        return null;
-    }
-
-
-    void CreateNewBulletPool()
-    {
-        bulletPool = new List<GameObject>();
-
-        for (int i = 0; i < bulletPoolSize; i++)
-        {
-            GameObject bullet = Instantiate(numberBulletPrefab);
-            bullet.SetActive(false);
-            bulletPool.Add(bullet);
         }
     }
 }
