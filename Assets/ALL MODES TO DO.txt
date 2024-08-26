@@ -2,14 +2,15 @@
 ~ Overarching scripts for handling data between modes
 
 DOOM
-    - What weapons to use?
+    - Which weapons to use?
     - Multiple song tracks
     - UI
     - and Chainsaw
     - And Grappling Hook
+    - Glory kill
 
 HELLSINGER
-    - What weapons to use?
+    - Which weapons to use?
     - UI
     - Clean up chevrons
     - Multiple song tracks
@@ -17,9 +18,10 @@ HELLSINGER
     - Match chevrons to beat
     - Match chevron glowing effect accordingly
     - Beat matching gives damage and effect bonuses
+    - Glory kill
 
 DUSK
-    - What weapons to use?
+    - Which weapons to use?
     - Multiple background theme tracks
     - UI
 
@@ -32,3 +34,7 @@ ENEMIES
 
 
 Handle transitions between modes
+
+
+
+Look into already acquired Dusk assets on PC.
